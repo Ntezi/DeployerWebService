@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  deployer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3580:80"
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: deployerdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yourpassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - /var/run/docker.sock:/var/run/docker.sock
+volumes:
+  pgdata:
